@@ -25,8 +25,3 @@ def get_response(uid) -> dict:
 
 def parse_response_to_manuscript(uid) -> manuscript.Manuscript:
     return parse_response(get_response(uid))
-
-
-if __name__ == '__main__':
-    uid = 246546608
-    print(parse_response_to_manuscript(uid))

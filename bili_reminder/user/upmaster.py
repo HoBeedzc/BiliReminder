@@ -1,4 +1,5 @@
 from ..observer.monitor import parse_response_to_manuscript
+from .loaduser import parse_response_to_upmater_list
 
 
 class UserError(ValueError):
@@ -20,6 +21,9 @@ class User:
         self.uid = uid
         self.name = name
         pass
+
+    def __str__(self):
+        return '{},{}'.format(self.uid, self.name)
 
 
 class UpMaster(User):
@@ -52,8 +56,10 @@ class UpMaster(User):
 class Audience(User):
     """
     """
-    def get_following_list(self, response: list):
+    def get_following_list(self):
         self.following_list = []
-        for upmaster_info in response:
-            self.following_list.append(
-                UpMaster.parse_upmaster_response(upmaster_info))
+        for pn in range(1, 6):
+            response = parse_response_to_upmater_list(pn=pn)
+            for upmaster_info in response:
+                self.following_list.append(
+                    UpMaster.parse_upmaster_response(upmaster_info))
