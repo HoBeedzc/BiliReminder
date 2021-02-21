@@ -1,3 +1,10 @@
-# http://api.bilibili.com/x/space/arc/search?mid=246546608&pn=1&ps=1
+from bili_reminder import BiliReminder as blr
 
-import request
+
+def main():
+    BLR = blr()
+    BLR.start()
+
+
+if __name__ == '__main__':
+    main()
