@@ -23,11 +23,11 @@ class BiliNoticeMail:
         self.message = None
         pass
 
-    def build_message(self, content: str):
+    def build_notice_message(self, content: str):
         self.message = MIMEText(content, 'plain', 'utf-8')
         self.message['From'] = Header(FROM_ADDR, 'utf-8')
         self.message['To'] = Header(TO_ADDR, 'utf-8')
-        self.message['Subject'] = Header('BiliReminder:Test', 'utf-8')
+        self.message['Subject'] = Header('BiliReminder:Notice', 'utf-8')
 
     def notice(self):
         if self.message is None:
@@ -40,6 +40,19 @@ class BiliNoticeMail:
     @classmethod
     def send_notice_mail(cls, content):
         noticer = cls()
-        noticer.build_message(content)
+        noticer.build_notice_message(content)
+        noticer.notice()
+        return noticer
+
+    def build_ready_message(self):
+        self.message = MIMEText('准备就绪！开始监控！', 'plain', 'utf-8')
+        self.message['From'] = Header(FROM_ADDR, 'utf-8')
+        self.message['To'] = Header(TO_ADDR, 'utf-8')
+        self.message['Subject'] = Header('BiliReminder:Ready', 'utf-8')
+
+    @classmethod
+    def send_ready_mail(cls):
+        noticer = cls()
+        noticer.build_ready_message()
         noticer.notice()
         return noticer

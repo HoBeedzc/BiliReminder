@@ -1,5 +1,7 @@
 from ..observer.monitor import parse_response_to_manuscript
-from .loaduser import parse_response_to_upmater_list
+from . import loaduser
+from ..reminder.mail import BiliNoticeMail
+from ..config import CONTENT
 
 
 class UserError(ValueError):
@@ -11,6 +13,10 @@ class AudienceFollowingListEmptyError(UserError):
 
 
 class UpMasterLastManuscriptEmptyError(UserError):
+    pass
+
+
+class UserNotExistError(UserError):
     pass
 
 
@@ -34,6 +40,9 @@ class UpMaster(User):
         self.last_manuscript = None
 
     def update_reminder(self):
+        content = CONTENT.format(self.name, self.last_manuscript.title,
+                                 self.last_manuscript.url)
+        BiliNoticeMail.send_notice_mail(content)
         pass
 
     def get_last_manuscript(self):
@@ -56,10 +65,22 @@ class UpMaster(User):
 class Audience(User):
     """
     """
+    def update_following_list_manuscript(self):
+        for upmaster in self.following_list:
+            upmaster.get_last_manuscript()
+
     def get_following_list(self):
         self.following_list = []
         for pn in range(1, 6):
-            response = parse_response_to_upmater_list(pn=pn)
+            response = loaduser.parse_response_to_upmater_list(self.uid, pn)
             for upmaster_info in response:
                 self.following_list.append(
                     UpMaster.parse_upmaster_response(upmaster_info))
+
+        self.update_following_list_manuscript()
+
+    @classmethod
+    def parse_audience_response(cls, response: dict):
+        uid = response['mid']
+        name = response['name']
+        return cls(uid, name)

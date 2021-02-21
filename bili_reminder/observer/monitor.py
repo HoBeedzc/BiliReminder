@@ -1,21 +1,21 @@
 from . import manuscript
-from ..user.upmaster import UpMasterLastManuscriptEmptyError
+from ..user import upmaster
 import requests as rs
 import json
 from ..config import HEAD
 
 
-def parse_response(response: dict) -> manuscript.Manuscript:
+def parse_response_for_manuscript(response: dict) -> manuscript.Manuscript:
     vlist = response['data']['list']['vlist']
     if len(vlist) == 0:
-        raise UpMasterLastManuscriptEmptyError(
+        raise upmaster.UpMasterLastManuscriptEmptyError(
             'This UpMater have not upload a manuscript!')
     else:
         manuscript_response = vlist[0]
     return manuscript.Manuscript.parse_manuscript_response(manuscript_response)
 
 
-def get_response(uid) -> dict:
+def get_response_for_manuscript(uid) -> dict:
     url = r'http://api.bilibili.com/x/space/arc/search?mid={}&pn=1&ps=1'.format(
         uid)
     r = rs.get(url, headers=HEAD)
@@ -24,4 +24,4 @@ def get_response(uid) -> dict:
 
 
 def parse_response_to_manuscript(uid) -> manuscript.Manuscript:
-    return parse_response(get_response(uid))
+    return parse_response_for_manuscript(get_response_for_manuscript(uid))
