@@ -8,8 +8,13 @@ from ..config import HEAD
 def parse_response_for_manuscript(response: dict) -> manuscript.Manuscript:
     vlist = response['data']['list']['vlist']
     if len(vlist) == 0:
-        raise upmaster.UpMasterLastManuscriptEmptyError(
-            'This UpMater have not upload a manuscript!')
+        # raise upmaster.UpMasterLastManuscriptEmptyError(
+        #     'UpMater {} have not upload a manuscript!'.format(response['uid']))
+        manuscript_response = {
+            'bvid': -1,
+            'title': None,
+            'mid': response['uid']
+        }
     else:
         manuscript_response = vlist[0]
     return manuscript.Manuscript.parse_manuscript_response(manuscript_response)
@@ -20,6 +25,7 @@ def get_response_for_manuscript(uid) -> dict:
         uid)
     r = rs.get(url, headers=HEAD)
     rjson = json.loads(r.content.decode('utf-8'))
+    rjson['uid'] = uid
     return rjson
 
 

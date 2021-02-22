@@ -6,7 +6,7 @@ from . import upmaster
 
 def parse_response_for_upmater(response: dict) -> list:
     ulist = response['data']['list']
-    if len(ulist) == 0:
+    if len(ulist) == 0 and response['pn'] == 1:
         raise upmaster.AudienceFollowingListEmptyError(
             'This audience have not following any upmaster!')
     return ulist
@@ -17,6 +17,8 @@ def get_response_for_upmater(uid, pn) -> dict:
         uid, pn)
     r = rs.get(url, headers=HEAD)
     rjson = json.loads(r.content.decode('utf-8'))
+    rjson['uid'] = uid
+    rjson['pn'] = pn
     return rjson
 
 

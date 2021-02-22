@@ -1,7 +1,7 @@
 from ..observer.monitor import parse_response_to_manuscript
 from . import loaduser
 from ..reminder.mail import BiliNoticeMail
-from ..config import CONTENT
+from ..config import CONTENT, MAX_PAGE
 
 
 class UserError(ValueError):
@@ -71,8 +71,9 @@ class Audience(User):
 
     def get_following_list(self):
         self.following_list = []
-        for pn in range(1, 6):
-            response = loaduser.parse_response_to_upmater_list(self.uid, pn)
+        for pn in range(MAX_PAGE):
+            response = loaduser.parse_response_to_upmater_list(
+                self.uid, pn + 1)
             for upmaster_info in response:
                 self.following_list.append(
                     UpMaster.parse_upmaster_response(upmaster_info))
