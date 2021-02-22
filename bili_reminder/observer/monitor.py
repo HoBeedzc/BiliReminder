@@ -6,6 +6,9 @@ from ..config import HEAD
 
 
 def parse_response_for_manuscript(response: dict) -> manuscript.Manuscript:
+    if response['code'] == -412:
+        print('请求被拦截，请稍后再试！')
+        exit()
     vlist = response['data']['list']['vlist']
     if len(vlist) == 0:
         # raise upmaster.UpMasterLastManuscriptEmptyError(

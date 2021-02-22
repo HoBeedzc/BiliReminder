@@ -2,6 +2,7 @@ from ..observer.monitor import parse_response_to_manuscript
 from . import loaduser
 from ..reminder.mail import BiliNoticeMail
 from ..config import CONTENT, MAX_PAGE
+from time import sleep
 
 
 class UserError(ValueError):
@@ -67,6 +68,7 @@ class Audience(User):
     """
     def update_following_list_manuscript(self):
         for upmaster in self.following_list:
+            sleep(1)
             upmaster.get_last_manuscript()
 
     def get_following_list(self):
