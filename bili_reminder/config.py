@@ -9,7 +9,7 @@ FROM_ADDR = 'example@from.com'
 PASSWD = 'yourpassword'
 TO_ADDR = 'example@to.com'
 
-BILIBILI_UID = '' # your uid
+BILIBILI_UID = ''  # your uid
 BILIBILI_COOKIES = {}
 
 CONTENT = '''
