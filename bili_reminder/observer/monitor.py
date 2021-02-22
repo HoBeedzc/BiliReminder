@@ -3,11 +3,13 @@ from ..user import upmaster
 import requests as rs
 import json
 from ..config import HEAD
+import time
 
 
 def parse_response_for_manuscript(response: dict) -> manuscript.Manuscript:
     if response['code'] == -412:
         print('请求被拦截，请稍后再试！')
+        print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
         exit()
     vlist = response['data']['list']['vlist']
     if len(vlist) == 0:
