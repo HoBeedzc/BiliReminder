@@ -41,8 +41,8 @@ class UpMaster(User):
         self.last_manuscript = None
 
     def update_reminder(self):
-        content = CONTENT.format(self.name, self.last_manuscript.title,
-                                 self.last_manuscript.url)
+        content = CONTENT.format(uploader = self.name, manuscript = self.last_manuscript.title,
+                                 link = self.last_manuscript.url)
         BiliNoticeMail.send_notice_mail(content)
         pass
 
