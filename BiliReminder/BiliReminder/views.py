@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.shortcuts import render
 
 
 def index(request):
@@ -6,7 +7,7 @@ def index(request):
 
 
 def yes(request):
-    return HttpResponse("This is a test.")
+    return render(request, "BiliReminder/test.html")
 
 
 def hello(request):
