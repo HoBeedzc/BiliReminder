@@ -11,3 +11,4 @@ def empty_redirect(request):
 
 def index(request):
     return render(request, 'User/index.html', context={})
+

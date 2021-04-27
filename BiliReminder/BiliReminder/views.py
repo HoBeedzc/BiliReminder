@@ -1,9 +1,14 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse_lazy
+
+
+def empty_redirect(request):
+    return HttpResponseRedirect('/index')
 
 
 def index(request):
-    return HttpResponse("Welcome to BiliReminder!")
+    return render(request, 'BiliReminder/index.html')
 
 
 def yes(request):
@@ -11,4 +16,4 @@ def yes(request):
 
 
 def hello(request):
-    return HttpResponse("Hello World!")
+    return render(request, "BiliReminder/hello.html")
