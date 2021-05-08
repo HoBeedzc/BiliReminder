@@ -19,9 +19,9 @@ from . import views
 
 urlpatterns = [
     path('', views.empty_redirect),
-    path('index/', views.index),
-    path('hello/', views.hello),
-    path('yes/', views.yes),
+    path('index/', views.index, name='index'),
+    path('hello/', views.hello, name='hello'),
+    path('yes/', views.yes, name='yes'),
 
     # admin urls
     path('admin/', admin.site.urls),
