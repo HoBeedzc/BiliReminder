@@ -25,6 +25,18 @@ def info(request, uid):
     return render(request, 'User/info.html', context={})
 
 
+class UserInfoView(View):
+    def __init__(self):
+        super().__init__()
+        self.ctx = {}
+
+    def get(self, request, uid):
+        return render(request, 'User/info.html', context=self.ctx)
+
+    def post(self, request, uid):
+        return render(request, 'User/info.html', context=self.ctx)
+
+
 class LoginView(View):
     def __init__(self):
         super().__init__()
