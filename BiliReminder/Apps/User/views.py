@@ -17,11 +17,7 @@ def index(request):
     return render(request, 'User/index.html', context={})
 
 
-def login(request):
-    return render(request, 'User/login.html', context={})
-
-
-def signup(request):
+def forget(request):
     return render(request, 'User/signup.html', context={})
 
 
@@ -35,6 +31,9 @@ class LoginView(View):
         self.ctx = {}
 
     def get(self, request):
+        if request.session.get('is_login', False):
+            cnt_uid = request.session.get('uemail')
+            self.ctx["msg"] = "当前已登陆账号：{}，请勿重复登陆！".format(cnt_uid)
         return render(request, 'User/login.html', context=self.ctx)
 
     def post(self, request):
@@ -44,6 +43,7 @@ class LoginView(View):
             check_result = self.__check(data["uid"], data["pwd"])
             if check_result == 1:
                 self.__login(request, data["uid"])
+                return HttpResponseRedirect(reverse_lazy('index'))
             elif check_result == -1:
                 pass
             elif check_result == 0:
@@ -65,8 +65,55 @@ class LoginView(View):
             return 0
         # 0 for not have this account 1 for check success -1 for check failed
 
-    def __login(self, request, uid):
+    def __login(self, request, email):
+        user_obj = models.UserLogin.objects.get(account=email)
         request.session['is_login'] = True
-        request.session['uid'] = uid
+        request.session['uid'] = user_obj.user.uid
+        request.session['uname'] = user_obj.user.name
+        request.session['uemail'] = user_obj.account
         self.ctx["msg"] = "登陆成功！"
         pass
+
+
+class SignupView(View):
+    def __init__(self):
+        super().__init__()
+        self.ctx = {}
+
+    def get(self, request):
+        if request.session.get('is_login', False):
+            cnt_uid = request.session.get('uemail')
+            self.ctx["msg"] = "当前已登陆账号：{}，如需注册新账号请先退出登陆！".format(cnt_uid)
+        return render(request, 'User/signup.html', context=self.ctx)
+
+    def post(self, request):
+        signup_form = forms.SignupForm(request.POST)
+        if signup_form.is_valid():
+            data = signup_form.cleaned_data
+            if self.__check(data["email"]):  # 验证是否有重复注册
+                new_user = models.User()
+                new_user.name = data["name"]
+                new_user.email = data["email"]
+                new_user.save()
+
+                new_user_login = models.UserLogin()
+                new_user_login.account = data["email"]
+                new_user_login.pwd = data["pwd"]
+                new_user_login.user = new_user
+                new_user_login.save()
+
+                # 注册成功
+                return HttpResponseRedirect(reverse_lazy('User:login'))
+            else:
+                pass
+        else:
+            self.ctx["msg"] = "表单填写不合法！"
+        return render(request, 'User/signup.html', context=self.ctx)
+
+    def __check(self, email):
+        res = models.UserLogin.objects.filter(account=email).exists()
+        if res:
+            self.ctx["check"] = "该账号已被注册！"
+            return 0
+        else:
+            return 1

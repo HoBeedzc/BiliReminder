@@ -1,10 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>asd</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>signup - BiliReminder</title>
+    <meta name="description" content="这是一个 index 页面">
+    <meta name="keywords" content="index">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="icon" type="image/png" href="../../static/Content/i/favicon.png">
+    <link rel="apple-touch-icon-precomposed" href="../../static/Content/i/app-icon72x72@2x.png">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+    <link rel="stylesheet" href="../../static/Content/css/amazeui.min.css" />
+    <link rel="stylesheet" href="../../static/Content/css/amazeui.datatables.min.css" />
+    <link rel="stylesheet" href="../../static/Content/css/app.css">
+    <script src="../../static/Content/js/jquery.min.js"></script>
 </head>
-<body>
-    <p>This is a signup html</p>
+
+<body data-type="login">
+    <script src="../../static/Content/js/theme.js"></script>
+    <div class="am-g tpl-g">
+        <div class="tpl-login">
+            <div class="tpl-login-content">
+                <div class="tpl-login-title">注册用户</div>
+                <span class="tpl-login-content-info">
+                  创建一个新的用户
+              </span>
+                <form class="am-form tpl-form-line-form" method="post" action="{% url 'User:signup' %}">
+                    <div class="am-form-group">
+                        <label for="user-email">邮箱</label>
+                        <input name="email" type="email" class="tpl-form-input" id="user-email" placeholder="邮箱">
+                    </div>
+
+                    <div class="am-form-group">
+                        <label for="user-account">用户名</label>
+                        <input name="name" type="text" class="tpl-form-input" id="user-account" placeholder="用户名">
+                    </div>
+
+                    <div class="am-form-group">
+                        <label for="user-pwd">密码</label>
+                        <input name="pwd" type="password" class="tpl-form-input" id="user-pwd" placeholder="请输入密码">
+                    </div>
+
+                    <div class="am-form-group">
+                        <label for="user-pwd-2">重复密码</label>
+                        <input name="pwd2" type="password" class="tpl-form-input" id="user-pwd-2" placeholder="再次输入密码">
+                    </div>
+
+                    <div class="am-form-group tpl-login-remember-me">
+                        <input id="remember-me" type="checkbox">
+                        <label for="remember-me">
+                        我已阅读并同意 <a href="javascript:;">《用户注册协议》</a>
+                         </label>
+                    </div>
+                    <div class="am-form-group">
+                        <input name="submit" type="submit" value="注册" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"/>
+                        <p>
+                            已有账号？
+                            <a href="{% url 'User:login' %}" class="">登陆</a> 或
+                            <a href="{% url 'User:forget' %}" class="">忘记密码</a>
+                        </p>
+                    </div>
+                    {% csrf_token %}
+                </form>
+
+                <p>{{ check }}</p>
+                <p>{{ msg }}</p>
+
+            </div>
+        </div>
+    </div>
+    <script src="../../static/Content/js/amazeui.min.js"></script>
+    <script src="../../static/Content/js/app.js"></script>
 </body>
 </html>

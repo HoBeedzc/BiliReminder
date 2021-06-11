@@ -17,26 +17,11 @@
     <link rel="stylesheet" href="../../static/Content/css/amazeui.datatables.min.css" />
     <link rel="stylesheet" href="../../static/Content/css/app.css">
     <script src="../../static/Content/js/jquery.min.js"></script>
-
 </head>
 
 <body data-type="login">
     <script src="../../static/Content/js/theme.js"></script>
     <div class="am-g tpl-g">
-        <!-- 风格切换 -->
-        <div class="tpl-skiner">
-            <div class="tpl-skiner-toggle am-icon-cog">
-            </div>
-            <div class="tpl-skiner-content">
-                <div class="tpl-skiner-content-title">
-                    选择主题
-                </div>
-                <div class="tpl-skiner-content-bar">
-                    <span class="skiner-color skiner-white" data-color="theme-white"></span>
-                    <span class="skiner-color skiner-black" data-color="theme-black"></span>
-                </div>
-            </div>
-        </div>
         <div class="tpl-login">
             <div class="tpl-login-content">
                 <div class="tpl-login-logo">
@@ -45,12 +30,12 @@
 
                 <form class="am-form tpl-form-line-form" action="{% url 'User:login' %}" method="post">
                     <div class="user-account">
-                        <label for="remember-me">账号</label>
-                        <input name="uid" type="text" class="tpl-form-input" id="user-account" placeholder="请输入账号">
+                        <label for="user-account">账号</label>
+                        <input name="uid" type="email" class="tpl-form-input" id="user-account" placeholder="请输入账号">
                     </div>
 
                     <div class="user-pwd">
-                        <label for="remember-me">密码</label>
+                        <label for="user-pwd">密码</label>
                         <input name="pwd" type="password" class="tpl-form-input" id="user-pwd" placeholder="请输入密码">
                     </div>
                     <div class="am-form-group tpl-login-remember-me">
@@ -58,9 +43,12 @@
                         <label for="remember-me">记住密码</label>
                     </div>
                     <div class="am-form-group">
-                        <input name="submit" type="submit" value="登陆" class="tpl-login-btn"/>
-                        <a href="#" class="tpl-login-btn">注册</a>
-                        <a href="#" class="tpl-login-btn">忘记密码</a>
+                        <input name="submit" type="submit" value="登陆" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"/>
+                        <p>
+                            还没有账号？
+                            <a href="{% url 'User:signup' %}" class="">注册</a> 或
+                            <a href="{% url 'User:forget' %}" class="">忘记密码</a>
+                        </p>
                     </div>
                     {% csrf_token %}
                 </form>
@@ -73,7 +61,5 @@
     </div>
     <script src="../../static/Content/js/amazeui.min.js"></script>
     <script src="../../static/Content/js/app.js"></script>
-
 </body>
-
 </html>
