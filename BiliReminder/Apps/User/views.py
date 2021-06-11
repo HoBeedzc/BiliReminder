@@ -18,11 +18,11 @@ def index(request):
 
 
 def forget(request):
-    return render(request, 'User/signup.html', context={})
+    return render(request, 'User/forget.html', context={})
 
 
 def info(request, uid):
-    return HttpResponseRedirect(reverse_lazy('Apps.User:index'))
+    return render(request, 'User/info.html', context={})
 
 
 class LoginView(View):
@@ -73,6 +73,19 @@ class LoginView(View):
         request.session['uemail'] = user_obj.account
         self.ctx["msg"] = "登陆成功！"
         pass
+
+
+class LogoutView(View):
+    def __init__(self):
+        super().__init__()
+        self.ctx = {}
+
+    def get(self, request):
+        if request.session.get('is_login', False):
+            request.session.clear()
+        else:
+            print('压根就没登陆')
+        return HttpResponseRedirect(reverse_lazy('index'))
 
 
 class SignupView(View):
