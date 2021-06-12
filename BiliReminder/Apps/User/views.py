@@ -45,6 +45,7 @@ class LoginView(View):
     def get(self, request):
         if request.session.get('is_login', False):
             cnt_uid = request.session.get('uemail')
+            
             self.ctx["msg"] = "当前已登陆账号：{}，请勿重复登陆！".format(cnt_uid)
         return render(request, 'User/login.html', context=self.ctx)
 
