@@ -18,10 +18,14 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
+    # Hello pages
     path('', views.empty_redirect),
     path('index/', views.index, name='index'),
     path('hello/', views.hello, name='hello'),
     path('yes/', views.yes, name='yes'),
+
+    # global pages
+    path('404/', views.HTTPStateCode404View.as_view(), name='404'),
 
     # admin urls
     path('admin/', admin.site.urls),
