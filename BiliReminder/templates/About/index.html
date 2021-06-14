@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block topbar-item %}
+<li><a href="{% url 'Subscribe:index' %}">订阅</a></li>
+<li><a href="{% url 'User:index' %}">用户</a></li>
+<li><a href="{% url 'Help:index' %}">帮助</a></li>
+<li class="am-active"><a href="{% url 'About:index' %}">关于</a></li>
+<li><a href="{% url 'Thanks:index' %}">鸣谢</a></li>
+{% endblock %}

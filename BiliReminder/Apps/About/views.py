@@ -9,10 +9,10 @@ from . import forms
 
 # Create your views here.
 def empty_redirect(request):
-    return HttpResponseRedirect(reverse_lazy('Apps.User:index'))
+    return HttpResponseRedirect(reverse_lazy('Apps.About:index'))
 
 
 def index(request):
-    return render(request, 'User/index.html', context={})
+    return render(request, 'About/index.html', context={})
 
 # Create your views here.

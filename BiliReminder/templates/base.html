@@ -38,11 +38,13 @@
   
     <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
       <ul class="am-nav am-nav-pills am-topbar-nav">
-        <li class="am-active"><a href="#">订阅</a></li>
-        <li><a href="#">用户</a></li>
-        <li><a href="#">帮助</a></li>
-        <li><a href="#">关于</a></li>
-        <li><a href="#">鸣谢</a></li>
+        {% block topbar-item %}
+        <li class="am-active"><a href="{% url 'Subscribe:index' %}">订阅</a></li>
+        <li><a href="{% url 'User:index' %}">用户</a></li>
+        <li><a href="{% url 'Help:index' %}">帮助</a></li>
+        <li><a href="{% url 'About:index' %}">关于</a></li>
+        <li><a href="{% url 'Thanks:index' %}">鸣谢</a></li>
+        {% endblock %}
       </ul>
   
       <form class="am-topbar-form am-topbar-right am-form-inline" role="search">

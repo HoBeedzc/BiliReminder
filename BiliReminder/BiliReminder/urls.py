@@ -35,6 +35,6 @@ urlpatterns = [
     path('subscribe/', include('Apps.Subscribe.urls', namespace='Subscribe')),
     path('About/', include('Apps.About.urls',namespace='About')),
     path('Thanks/',include('Apps.Thanks.urls',namespace='Thanks')),
-    path('Help/',include('Apps.Thanks.urls',namespace='Help')),
+    path('Help/',include('Apps.Help.urls',namespace='Help')),
 
 ]
