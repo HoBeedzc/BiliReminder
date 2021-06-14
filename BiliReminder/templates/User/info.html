@@ -1,9 +1,27 @@
 {% extends 'base.html' %}
 
+{% block title %}个人信息{% endblock %}
+
 {% block topbar-item %}
 <li><a href="{% url 'Subscribe:index' %}">订阅</a></li>
 <li class="am-active"><a href="{% url 'User:index' %}">用户</a></li>
 <li><a href="{% url 'Help:index' %}">帮助</a></li>
 <li><a href="{% url 'About:index' %}">关于</a></li>
 <li><a href="{% url 'Thanks:index' %}">鸣谢</a></li>
+{% endblock %}
+
+
+{% block sidebar-item %}
+<li><a href="{% url 'User:index' %}"><span class="am-icon-home"></span> 用户首页 </a></li>
+<li><a href="{% url 'User:info' request.session.uid %}"><span class="am-icon-user"></span> 个人信息 </a></li>
+<li><a href="{% url 'User:edit' %}"><span class="am-icon-pencil-square-o"></span> 修改信息 </a></li>
+<li><a href="{% url 'User:vip' %}"><span class="am-icon-paper-plane-o"></span> 开通会员 </a></li>
+<li><a href="{% url 'User:logoff' %}"><span class="am-icon-sign-out"></span> 注销账号 </a></li>
+{% endblock %}
+
+
+{% block Breadcrumb %}
+<a href="{% url 'Subscribe:index' %}"><strong class="am-text-primary am-text-lg">首页</strong></a> /
+<a href="{% url 'User:index' %}"> 用户 </a> /
+<a href="{% url 'User:info' request.session.uid %}"><small>个人信息</small></a>
 {% endblock %}

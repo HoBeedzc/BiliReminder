@@ -6,8 +6,8 @@ from django.views.generic import View
 from . import models
 from . import forms
 
-
 # Create your views here.
+
 
 def empty_redirect(request):
     return HttpResponseRedirect(reverse_lazy('Apps.User:index'))
@@ -22,6 +22,18 @@ def forget(request):
 
 
 def info(request, uid):
+    return render(request, 'User/info.html', context={})
+
+
+def edit(request):
+    return render(request, 'User/info.html', context={})
+
+
+def vip(request):
+    return render(request, 'User/info.html', context={})
+
+
+def logoff(request):
     return render(request, 'User/info.html', context={})
 
 
@@ -45,7 +57,7 @@ class LoginView(View):
     def get(self, request):
         if request.session.get('is_login', False):
             cnt_uid = request.session.get('uemail')
-            
+
             self.ctx["msg"] = "当前已登陆账号：{}，请勿重复登陆！".format(cnt_uid)
         return render(request, 'User/login.html', context=self.ctx)
 
