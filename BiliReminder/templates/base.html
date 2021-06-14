@@ -102,14 +102,18 @@
         <div class="am-panel am-panel-default admin-sidebar-panel">
           <div class="am-panel-bd">
             <p><span class="am-icon-bookmark"></span> 公告</p>
+            {% block notice %}
             <p>时光静好，与君语；细水流年，与君同。—— Amaze UI</p>
+            {% endblock %}
           </div>
         </div>
   
         <div class="am-panel am-panel-default admin-sidebar-panel">
           <div class="am-panel-bd">
             <p><span class="am-icon-tag"></span> wiki</p>
+            {% block wiki %}
             <p>Welcome to the Amaze UI wiki!</p>
+            {% endblock %}
           </div>
         </div>
       </div>
@@ -130,7 +134,7 @@
             {% endblock %}
           </div>
         </div>
-         
+
         <ul class="am-avg-sm-1 am-avg-md-4 am-margin am-padding am-text-center admin-content-list ">
           <li><a href="#" class="am-text-success"><span class="am-icon-btn am-icon-file-text"></span><br>新增页面<br>2300</a></li>
           <li><a href="#" class="am-text-warning"><span class="am-icon-btn am-icon-briefcase"></span><br>成交订单<br>308</a></li>

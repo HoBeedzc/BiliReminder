@@ -33,5 +33,8 @@ urlpatterns = [
     # app urls
     path('user/', include('Apps.User.urls', namespace='User')),
     path('subscribe/', include('Apps.Subscribe.urls', namespace='Subscribe')),
+    path('About/', include('Apps.About.urls',namespace='About')),
+    path('Thanks/',include('Apps.Thanks.urls',namespace='Thanks')),
+    path('Help/',include('Apps.Thanks.urls',namespace='Help')),
 
 ]

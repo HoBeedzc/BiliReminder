@@ -2,4 +2,5 @@ from django.apps import AppConfig
 
 
 class ThanksConfig(AppConfig):
-    name = 'Thanks'
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'Apps.Thanks'
