@@ -53,13 +53,35 @@
         </div>
       </form>
 
+        {% if request.session.is_login %}
+
       <div class="am-topbar-right">
-        <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm">注册</button>
+        <a href="{% url 'User:logout' %}?from=1" class="am-topbar-brand" style="font-size: 15px;padding: 0px">退出登陆</a>
       </div>
-  
+
       <div class="am-topbar-right">
-        <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm">登录</button>
+        <a href="{% url 'User:info' request.session.uid %}" class="am-topbar-brand" style="font-size: 15px;padding: 0px">个人中心</a>
       </div>
+
+      <div class="am-topbar-right">
+        <p class="am-topbar-brand" style="font-size: 15px;padding: 0px">你好，{{ request.session.uname }}!</p>
+      </div>
+
+        {% else %}
+
+      <div class="am-topbar-right">
+        <a href="{% url 'User:signup' %}">
+        <button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"><span class="am-icon-pencil"></span>注册</button>
+        </a>
+      </div>
+
+      <div class="am-topbar-right">
+        <a href="{% url 'User:login' %}">
+        <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm"><span class="am-icon-user"></span>登录</button>
+        </a>
+      </div>
+
+        {% endif %}
 
       <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
         <li><a href="javascript:;"><span class="am-icon-envelope-o"></span> 收件箱 <span class="am-badge am-badge-warning">5</span></a></li>
@@ -73,7 +95,6 @@
             <li><a href="#"><span class="am-icon-power-off"></span> 退出</a></li>
           </ul>
         </li>
-        <li class="am-hide-sm-only"><a href="javascript:;" id="admin-fullscreen"><span class="am-icon-arrows-alt"></span> <span class="admin-fullText">开启全屏</span></a></li>
       </ul>
     </div>
     {% endblock %}

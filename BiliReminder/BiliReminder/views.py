@@ -3,12 +3,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import View
 
-ctx = {
-    'register_url': reverse_lazy('yes'),
-    'hello_url': reverse_lazy('hello'),
-    'index_url': reverse_lazy('index')
-}
-
+ctx = {}
 
 def empty_redirect(request):
     return HttpResponseRedirect('/index')

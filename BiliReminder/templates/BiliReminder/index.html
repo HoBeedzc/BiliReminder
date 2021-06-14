@@ -70,13 +70,13 @@
     <div class="am-collapse am-topbar-collapse" id="collapse-head">
       <ul class="am-nav am-nav-pills am-topbar-nav">
         <li class="am-active"><a href="{% url 'index' %}">首页</a></li>
-        <li><a href="{% url 'hello' %}">关于</a></li>
+        <li><a href="{% url 'aboutus' %}">关于</a></li>
       </ul>
 
         {% if request.session.is_login %}
 
       <div class="am-topbar-right">
-        <a href="{% url 'User:logout' %}" class="am-topbar-brand" style="font-size: 15px;padding: 0px">退出登陆</a>
+        <a href="{% url 'User:logout' %}?from=0" class="am-topbar-brand" style="font-size: 15px;padding: 0px">退出登陆</a>
       </div>
 
       <div class="am-topbar-right">
@@ -117,8 +117,8 @@
       </p>
 
       <p>
-        <a href="{{ register_url }}" class="am-btn am-btn-sm get-btn">开始使用</a>
-        <a href="{{ hello_url }}" class="am-btn am-btn-sm get-btn">关于我们</a>
+        <a href="{% url 'Subscribe:index' %}" class="am-btn am-btn-sm get-btn">开始使用</a>
+        <a href="{% url 'aboutus' %}" class="am-btn am-btn-sm get-btn">关于我们</a>
       </p>
     </div>
   </div>

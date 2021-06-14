@@ -56,7 +56,7 @@ class LoginView(View):
             check_result = self.__check(data["uid"], data["pwd"])
             if check_result == 1:
                 self.__login(request, data["uid"])
-                return HttpResponseRedirect(reverse_lazy('index'))
+                return HttpResponseRedirect(reverse_lazy('Subscribe:index'))
             elif check_result == -1:
                 pass
             elif check_result == 0:
@@ -98,7 +98,10 @@ class LogoutView(View):
             request.session.clear()
         else:
             print('压根就没登陆')
-        return HttpResponseRedirect(reverse_lazy('index'))
+        if int(request.GET.get('from')):
+            return HttpResponseRedirect(reverse_lazy('Subscribe:index'))
+        else:
+            return HttpResponseRedirect(reverse_lazy('index'))
 
 
 class SignupView(View):

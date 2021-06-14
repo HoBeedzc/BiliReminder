@@ -21,7 +21,7 @@ urlpatterns = [
     # Hello pages
     path('', views.empty_redirect),
     path('index/', views.index, name='index'),
-    path('hello/', views.hello, name='hello'),
+    path('aboutus/', views.hello, name='aboutus'),
     path('yes/', views.yes, name='yes'),
 
     # global pages
