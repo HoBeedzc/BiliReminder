@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}注销账号{% endblock %}
+
+{% block topbar-item %}
+<li><a href="{% url 'Subscribe:index' %}">订阅</a></li>
+<li class="am-active"><a href="{% url 'User:index' %}">用户</a></li>
+<li><a href="{% url 'Help:index' %}">帮助</a></li>
+<li><a href="{% url 'About:index' %}">关于</a></li>
+<li><a href="{% url 'Thanks:index' %}">鸣谢</a></li>
+{% endblock %}
+
+
+{% block sidebar-item %}
+<li><a href="{% url 'User:index' %}"><span class="am-icon-home"></span> 用户首页 </a></li>
+<li><a href="{% url 'User:info' %}"><span class="am-icon-user"></span> 个人信息 </a></li>
+<li><a href="{% url 'User:edit' %}"><span class="am-icon-pencil-square-o"></span> 修改信息 </a></li>
+<li><a href="{% url 'User:vip' %}"><span class="am-icon-paper-plane-o"></span> 开通会员 </a></li>
+<li><a href="{% url 'User:logoff' %}"><span class="am-icon-sign-out"></span> 注销账号 </a></li>
+{% endblock %}
+
+
+{% block Breadcrumb %}
+<a href="{% url 'Subscribe:index' %}"><strong class="am-text-primary am-text-lg">首页</strong></a> /
+<a href="{% url 'User:index' %}"> 用户 </a> /
+<a href="{% url 'User:logoff' %}"><small>注销账号</small></a>
+{% endblock %}
+
+{% block main-content %}
+<div class="am-g">
+    <div class="am-u-sm-6">
+        <div class="am-panel am-panel-secondary">
+            <div class="am-panel-hd">账号信息</div>
+            <div class="am-panel-bd">
+              <p class="am-text-primary am-text-l">用户名：{{ name }}</p>
+              <p class="am-text-primary am-text-l">手机号：{{ tel }}</p>
+              <p class="am-text-primary am-text-l">邮箱：{{ email }}</p>
+              <p class="am-text-primary am-text-l">绑定b站id：{{ bili_uid }}</p>
+                <!--div class="am-input-group am-input-group-primary">
+                  <span class="am-input-group-label"><i class="am-icon-user am-icon-fw"></i></span>
+                  <input type="text" class="am-form-field" placeholder="你的大名">
+                  <span class="am-input-group-label"><i class="am-icon-user am-icon-fw"></i></span>
+                  <input type="text" class="am-form-field" placeholder="你的大名">
+                </div>
+                <p></p>
+                <div class="am-input-group am-input-group-primary">
+                  <span class="am-input-group-label"><i class="am-icon-user am-icon-fw"></i></span>
+                  <input type="text" class="am-form-field" placeholder="你的大名">
+                </div>
+
+                <div class="am-input-group am-input-group-secondary">
+                  <span class="am-input-group-label"><i class="am-icon-user am-icon-fw"></i></span>
+                  <input type="text" class="am-form-field" placeholder="你的大名">
+                </div-->
+            </div>
+        </div>
+    </div>
+
+    <div class="am-u-sm-6">
+        {% if confirm == 1 %}
+        <div class="am-panel am-panel-danger">
+            <div class="am-panel-hd">确认注销</div>
+            <div class="am-panel-bd">
+                <p> 您正在进行危险操作 ，请确保您知晓该操作的后果：</p>
+                <p> 您的账号将会被永久注销，后续您将无法获取有关本账号的任何信息！</p>
+                <p> 请输入账号 {{ request.session.uemail }} 的密码以完成操作：</p>
+                <form action="{% url 'User:logoff' %}" method="post">
+                <div class="am-input-group am-input-group-danger">
+                  <input name="pwd" type="password" class="am-form-field" placeholder="账号密码"/>
+                  <span class="am-input-group-btn">
+                    <input type="submit" class="am-btn am-btn-danger" value="确认注销"/>
+                  </span>
+                  {% csrf_token %}
+                </div>
+                </form>
+                <p> {{ msg }}</p>
+            </div>
+        </div>
+        {% elif confirm == 2 %}
+        <div class="am-panel am-panel-success">
+            <div class="am-panel-hd">确认注销</div>
+            <div class="am-panel-bd">
+                <p> 账号注销成功！</p>
+            </div>
+        </div>
+        {% else %}
+        <div class="am-panel am-panel-warning">
+            <div class="am-panel-hd">点击确认注销</div>
+            <div class="am-panel-bd">
+                <a class="am-btn am-btn-warning" href="{% url 'User:logoff' %}?confirm=True"> 确认注销 </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

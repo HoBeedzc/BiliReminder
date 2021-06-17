@@ -6,6 +6,7 @@ from django.views.generic import View
 from . import models
 from . import forms
 
+
 # Create your views here.
 
 
@@ -21,20 +22,16 @@ def forget(request):
     return render(request, 'User/forget.html', context={})
 
 
-def info(request, uid):
+def info(request):
     return render(request, 'User/info.html', context={})
 
 
 def edit(request):
-    return render(request, 'User/info.html', context={})
+    return render(request, 'User/edit.html', context={})
 
 
 def vip(request):
-    return render(request, 'User/info.html', context={})
-
-
-def logoff(request):
-    return render(request, 'User/info.html', context={})
+    return render(request, 'User/vip.html', context={})
 
 
 class UserInfoView(View):
@@ -42,10 +39,10 @@ class UserInfoView(View):
         super().__init__()
         self.ctx = {}
 
-    def get(self, request, uid):
+    def get(self, request):
         return render(request, 'User/info.html', context=self.ctx)
 
-    def post(self, request, uid):
+    def post(self, request):
         return render(request, 'User/info.html', context=self.ctx)
 
 
@@ -57,7 +54,6 @@ class LoginView(View):
     def get(self, request):
         if request.session.get('is_login', False):
             cnt_uid = request.session.get('uemail')
-
             self.ctx["msg"] = "当前已登陆账号：{}，请勿重复登陆！".format(cnt_uid)
         return render(request, 'User/login.html', context=self.ctx)
 
@@ -107,6 +103,7 @@ class LogoutView(View):
 
     def get(self, request):
         if request.session.get('is_login', False):
+            request.session['is_login'] = False
             request.session.clear()
         else:
             print('压根就没登陆')
@@ -114,6 +111,64 @@ class LogoutView(View):
             return HttpResponseRedirect(reverse_lazy('Subscribe:index'))
         else:
             return HttpResponseRedirect(reverse_lazy('index'))
+
+
+class LogoffView(View):
+    def __init__(self):
+        super().__init__()
+        self.ctx = {}
+
+    def get(self, request):
+        if not request.session.get('is_login', False):
+            return HttpResponseRedirect(reverse_lazy('User:login'))
+        self.__get_user_info(request.session.get('uid'))
+        if request.GET.get('confirm', False):
+            self.ctx['confirm'] = 1
+        else:
+            pass
+        return render(request, 'User/logoff.html', context=self.ctx)
+
+    def post(self, request):
+        if not request.session.get('is_login', False):
+            return HttpResponseRedirect(reverse_lazy('User:login'))
+        self.__get_user_info(request.session.get('uid'))
+        logoff_obj = forms.LogoffForm(request.POST)
+        if logoff_obj.is_valid():
+            data = logoff_obj.cleaned_data
+            acc = request.session.get('uemail')
+            user_obj = models.UserLogin.objects.filter(account=acc).get()
+            if user_obj.pwd == data['pwd']:
+                self.__del_account(acc)
+                if request.session.get('is_login', False):
+                    request.session['is_login'] = False
+                    request.session.clear()
+            else:
+                self.ctx['msg'] = "密码核验失败！"
+                self.ctx['confirm'] = 1
+        else:
+            self.ctx['msg'] = "输入数据不合法！"
+            self.ctx['confirm'] = 1
+        return render(request, 'User/logoff.html', context=self.ctx)
+
+    def __get_user_info(self, uid):
+        user_obj = models.User.objects.get(uid=uid)
+        self.ctx['name'] = user_obj.name
+        if user_obj.tel:
+            self.ctx['tel'] = user_obj.tel
+        else:
+            self.ctx['tel'] = '暂未绑定'
+        self.ctx['email'] = user_obj.email
+        if user_obj.bili_uid:
+            self.ctx['bili_uid'] = user_obj.bili_uid
+        else:
+            self.ctx['bili_uid'] = '暂未绑定'
+
+    def __del_account(self, acc):
+        user_obj = models.UserLogin.objects.get(account=acc)
+        user = user_obj.user
+        user_obj.delete()
+        user.delete()
+        self.ctx['confirm'] = 2
 
 
 class SignupView(View):
