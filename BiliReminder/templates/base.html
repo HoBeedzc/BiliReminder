@@ -52,7 +52,7 @@
       </div>
 
       <div class="am-topbar-right">
-        <a href="{% url 'User:info' request.session.uid %}" class="am-topbar-brand" style="font-size: 15px;padding: 0px">个人中心</a>
+        <a href="{% url 'User:info' %}" class="am-topbar-brand" style="font-size: 15px;padding: 0px">个人中心</a>
       </div>
 
       <div class="am-topbar-right">
@@ -153,6 +153,7 @@
           </div>
         </div>
 
+        {% block main-content %}
         <ul class="am-avg-sm-1 am-avg-md-4 am-margin am-padding am-text-center admin-content-list ">
           <li><a href="#" class="am-text-success"><span class="am-icon-btn am-icon-file-text"></span><br>新增页面<br>2300</a></li>
           <li><a href="#" class="am-text-warning"><span class="am-icon-btn am-icon-briefcase"></span><br>成交订单<br>308</a></li>
@@ -388,6 +389,7 @@
             </div>
           </div>
         </div>
+        {% endblock %}
       </div>
   
       <footer class="admin-content-footer">
